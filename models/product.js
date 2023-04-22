@@ -1,7 +1,7 @@
-const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
 
-// создаем схему товара
-const productSchema = new Schema({
+// створюємо схему товару
+const productSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -20,7 +20,7 @@ const productSchema = new Schema({
   },
 });
 
-// создаем модель товара на основе схемы
-const Product = model("Product", productSchema);
+// створюємо модель товару на основі схеми
+const Product = mongoose.model("Product", productSchema);
 
 module.exports = Product;
