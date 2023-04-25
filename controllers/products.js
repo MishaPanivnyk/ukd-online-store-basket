@@ -1,13 +1,8 @@
 const Product = require("../models/product");
 const { HttpError } = require("../helpers");
-const { body } = require("express-validator");
+
 const { validationResult } = require("express-validator");
 
-export const productValidationRules = [
-  body("name").exists(),
-  body("description").exists(),
-  body("price").exists(),
-];
 const productController = {
   async getAll(req, res) {
     try {

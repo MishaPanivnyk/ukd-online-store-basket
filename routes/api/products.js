@@ -1,8 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const productController = require("../../controllers/products");
-const productValidationRules = require("../../controllers/products");
-
+const { body } = require("express-validator");
+const productValidationRules = [
+  body("name").exists(),
+  body("description").exists(),
+  body("price").exists(),
+];
 // GET /products - отримати всі товари
 router.get("/", productController.getAll);
 
