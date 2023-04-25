@@ -1,56 +1,73 @@
 const Product = require("../models/product");
+const { HttpError } = require("../helpers");
+const { body } = require("express-validator");
+const { validationResult } = require("express-validator");
 
+export const productValidationRules = [
+  body("name").exists(),
+  body("description").exists(),
+  body("price").exists(),
+];
 const productController = {
-  getAll: async (req, res) => {
+  async getAll(req, res) {
     try {
       const products = await Product.find();
       return res.status(200).json(products);
     } catch (error) {
-      return res.status(500).json({ message: error.message });
+      throw HttpError(500, "Error server");
     }
   },
-  getById: async (req, res) => {
+  async getById(req, res) {
     try {
       const product = await Product.findById(req.params.id);
       if (!product) {
-        return res.status(404).json({ message: "Product not found" });
+        throw HttpError(404, "Not found");
       }
       return res.status(200).json(product);
     } catch (error) {
-      return res.status(500).json({ message: error.message });
+      throw HttpError(500, "Error server");
     }
   },
-  create: async (req, res) => {
+  async create(req, res) {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
       const product = new Product(req.body);
       await product.save();
       return res.status(201).json(product);
     } catch (error) {
-      return res.status(500).json({ message: error.message });
+      throw HttpError(500, "Error server");
     }
   },
-  update: async (req, res) => {
+
+  async update(req, res) {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
       const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
       });
       if (!product) {
-        return res.status(404).json({ message: "Product not found" });
+        throw HttpError(404, "Not found");
       }
       return res.status(200).json(product);
     } catch (error) {
-      return res.status(500).json({ message: error.message });
+      throw HttpError(500, "Error server");
     }
   },
-  remove: async (req, res) => {
+  async remove(req, res) {
     try {
       const product = await Product.findByIdAndRemove(req.params.id);
       if (!product) {
-        return res.status(404).json({ message: "Product not found" });
+        throw HttpError(404, "Not found");
       }
       return res.status(200).json(product);
     } catch (error) {
-      return res.status(500).json({ message: error.message });
+      throw HttpError(500, "Error server");
     }
   },
 };
