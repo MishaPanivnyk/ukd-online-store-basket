@@ -1,4 +1,4 @@
-# Online Store Cart
+# Online-store-basket
 
 ## Description
 
@@ -47,3 +47,4 @@ Once the server is running and accessed through the web browser, users can perfo
 - View a list of products available for purchase
 - Add a product to the cart by clicking the "Add to Cart" button and entering the desired quantity
 - Update the quantity of a product in the cart by changing the value in the quantity input field and clicking "Update", or delete the product by setting the quantity to 0 and clicking "Update"
+<img width="687" alt="MyAppleStore" src="https://user-images.githubusercontent.com/88387140/234234012-87029947-b067-453e-92f8-a1e44096ed4b.png">
