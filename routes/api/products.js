@@ -22,4 +22,10 @@ router.put("/:id", productValidationRules, productController.update);
 // DELETE /products/:id - видалити товар за ідентифікатором
 router.delete("/:id", productController.remove);
 
+router.post(
+  "/addToCart",
+  [body("productId").notEmpty().withMessage("Product ID is required")],
+  productController.addToCart
+);
+
 module.exports = router;
